@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Отримання доступу до матеріалів</title>
+  <style>
+    body {
+      background: #222;
+      color: #eee;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .container {
+      background: rgba(30,30,30,0.92);
+      padding: 36px 30px 24px 30px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px #111a;
+      max-width: 420px;
+      min-width: 300px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      transition: transform 0.4s ease-out;
+      animation: none;
+    }
+
+    h1 {
+      font-size: 1.4em;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      margin-bottom: 12px;
+      color: #f4d47c;
+    }
+
+    p {
+      color: #bdbdbd;
+      margin-bottom: 22px;
+      font-size: 1.08em;
+    }
+
+    select, button {
+      margin: 0 7px 0 0;
+      padding: 9px 8px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      background: #1a1a1a;
+      color: #eee;
+      font-size: 1em;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    select:focus, button:focus {
+      border-color: #f4d47c;
+    }
+
+    button {
+      font-weight: 500;
+      background: #f4d47c;
+      color: #252525;
+      cursor: pointer;
+      margin-left: 9px;
+      padding: 10px 18px;
+      border: none;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #e3c35b;
+    }
+
+    .error {
+      color: #e66a6a;
+      margin-top: 16px;
+      font-size: 1.07em;
+    }
+
+    @media (max-width: 430px) {
+      .container {
+        min-width: 0;
+        padding: 22px 5px 18px 5px;
+      }
+
+      select, button {
+        margin-bottom: 9px;
+        width: 31%;
+      }
+
+      button {
+        width: 99%;
+        margin-left: 0;
+      }
+    }
+
+    .explode-piece {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background: #333;
+      border-radius: 12px;
+      opacity: 0.9;
+      z-index: 999;
+      animation: explodeAnim 1.2s forwards ease-out;
+    }
+
+    @keyframes explodeAnim {
+      0% {
+        transform: scale(1) translate(0, 0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0.5) translate(var(--tx), var(--ty)) rotate(var(--rot));
+        opacity: 0;
+      }
+    }
+
+    .fade-out {
+      animation: fadeContainer 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeContainer {
+      0% { opacity: 1; }
+      100% { opacity: 0; transform: scale(0.8); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="formBox">
+    <h1>Отримання доступу до матеріалів</h1>
+    <p>Для доступу до приватної інформації, введіть вірну дату (день, місяць, рік):</p>
+    <form id="dateForm" autocomplete="off">
+      <select id="day" required><option value="">День</option></select>
+      <select id="month" required><option value="">Місяць</option></select>
+      <select id="year" required><option value="">Рік</option></select>
+      <button type="submit">Продовжити</button>
+    </form>
+    <div id="errorMsg" class="error"></div>
+  </div>
+
+  <script>
+    const daySel = document.getElementById('day');
+    for(let i=1;i<=31;i++) {
+      let o = document.createElement('option');
+      o.value = o.textContent = (i < 10 ? '0' : '') + i;
+      daySel.appendChild(o);
+    }
+    const monthSel = document.getElementById('month');
+    for(let i=1;i<=12;i++) {
+      let o = document.createElement('option');
+      o.value = o.textContent = (i < 10 ? '0' : '') + i;
+      monthSel.appendChild(o);
+    }
+    const yearSel = document.getElementById('year');
+    for(let i=1990;i<=2026;i++) {
+      let o = document.createElement('option');
+      o.value = o.textContent = i;
+      yearSel.appendChild(o);
+    }
+
+    document.getElementById('dateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const d = daySel.value;
+      const m = monthSel.value;
+      const y = yearSel.value;
+      const validDate = (d === '28' && m === '07' && y === '1992');
+      const errorMsg = document.getElementById('errorMsg');
+      const formBox = document.getElementById('formBox');
+
+      if(validDate) {
+        errorMsg.textContent = '';
+        formBox.classList.add('fade-out');
+
+        for (let i = 0; i < 22; i++) {
+          const piece = document.createElement('div');
+          piece.className = 'explode-piece';
+          piece.style.setProperty('--tx', (Math.random() * 800 - 400) + 'px');
+          piece.style.setProperty('--ty', (Math.random() * 600 - 300) + 'px');
+          piece.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+          piece.style.left = '50%';
+          piece.style.top = '50%';
+          piece.style.transform = 'translate(-50%, -50%)';
+          document.body.appendChild(piece);
+        }
+
+        setTimeout(() => {
+          window.location.href = "https://yuliahappydnyxatoyou-weloveyou.tilda.ws/#rec1134827968";
+        }, 1400);
+      } else {
+        errorMsg.textContent = 'Невірно. Спробуйте ще раз.';
+      }
+    });
+  </script>
+</body>
+</html>
